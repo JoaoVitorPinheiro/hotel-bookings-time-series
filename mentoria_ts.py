@@ -110,7 +110,7 @@ def plt_ts_categorical(df, col, time_period='year', size=[800, 370],
     for i, categoria in enumerate(categorias):
         fig.add_trace(
             go.Scatter(
-                x=table.index, y=table[categoria], name="hv",
+                x=table.index, y=table[categoria], name=categoria,
                 line_shape='hv', line=dict(color=color_palette[i])
             )
         )
@@ -192,7 +192,7 @@ def plt_ts_line(df, date, col, time_period = 'year', resample_method='mean',
 
     return fig
 
-def plt_ts_boxplot(df, date, col, time_period = 'year', number_format=',.2f', 
+def plt_ts_boxplot(df, col, col_period, number_format=',.2f', 
                    qtd_format='.d', outlier_color='rgba(233, 75, 59, 1)'):
     '''Plot BoxPlot of the distribution of a numerical variable in each timestamp
 
@@ -224,16 +224,16 @@ def plt_ts_boxplot(df, date, col, time_period = 'year', number_format=',.2f',
     if (data_numeric.max() - data_numeric.min()) > 100:
         number_format=',.0f'
 
-    ncols =  df[time_period].nunique()
+    ncols =  df[col_period].nunique()
     color_palette = list(sns.diverging_palette(200, 6, s=50, l=30, center = 'dark', n=ncols).as_hex())
     
     fig = go.Figure(data=[go.Box(
-        x=df.loc[df[time_period] == tp, time_period],
-        y=df.loc[df[time_period] == tp, col],
+        x=df.loc[df[col_period] == tp, col_period],
+        y=df.loc[df[col_period] == tp, col],
         boxmean=True,
         marker=dict(color=color_palette[i], outliercolor=outlier_color),
         name=str(tp)
-    ) for i, tp in enumerate(df[time_period].unique())])
+    ) for i, tp in enumerate(df[col_period].unique())])
 
     fig = set_default_config(fig)
     
