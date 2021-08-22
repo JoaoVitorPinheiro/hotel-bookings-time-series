@@ -171,16 +171,16 @@ def plt_ts_line(df, date, col, time_period = 'year', resample_method='mean',
     df['year'] = df.index.year
     years = np.unique(df['year'].values)
     number_of_years = len(years)
-    color_palette = list(sns.diverging_palette(200, 6, s=50, l=30,center = 'dark', n=number_of_years).as_hex())
+    color_palette = list(sns.diverging_palette(200, 6, s=50, l=30, center = 'dark', n=number_of_years).as_hex())
     fig = go.Figure()
 
     for i, year in enumerate(years):
         fig.add_trace(
             go.Scatter(
-                x=df.loc[df.year == year].index.month,
-                y=df.loc[df.year == year, col],
-                name=str(year),
-                mode='lines',
+                x = df.loc[df.year == year].index.month,
+                y = df.loc[df.year == year, col],
+                name = str(year),
+                mode = 'lines',
                 line_color=color_palette[i]
             )
         )
